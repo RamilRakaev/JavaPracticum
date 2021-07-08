@@ -3,35 +3,39 @@ package com.company;
 public class Main {
 
     public static void main(String[] args) {
-        practicum();
+        consoleOutput();
     }
 
-    public static void practicum() {
+    public static void consoleOutput() {
         System.out.println("problem 1:");
-        sumMultiplesNumbers(3, 5);
+        System.out.println(getMultiplesNumbersSum(3, 5));
+
         System.out.println("problem 2:");
-        sumEvenNumbers(4000000);
+        System.out.println(sumEvenNumbers(4000000));
+
         System.out.println("problem 3:");
-        sumsNumbers();
+        System.out.println(sumEvenNumbers(4000000));
+        System.out.println(sumEvenNumbers(100));
+
         System.out.println("problem 4:");
-        sumMultiplesNumbers(3, 5);
-        sumMultiplesNumbers(4, 7);
-        sumMultiplesNumbers(4, 7, 2);
+        System.out.println(getMultiplesNumbersSum(3, 5));
+        System.out.println(getMultiplesNumbersSum(4, 7));
+        System.out.println(getMultiplesNumbersSum(4, 7, 2));
     }
 
     //  the sum of numbers that are multiples of two divisors
-    public static void sumMultiplesNumbers(int firstDivisor, int secondDivisor) {
+    public static int getMultiplesNumbersSum(int firstDivisor, int secondDivisor) {
         int sum = 0;
         for (int i = 1; i < 1000; i++) {
             if (i % firstDivisor == 0 || i % secondDivisor == 0) {
                 sum += i;
             }
         }
-        System.out.println(sum);
+        return sum;
     }
 
     //  the sum of numbers that are multiples of an arbitrary number of divisors
-    public static void sumMultiplesNumbers(int... divisors) {
+    public static int getMultiplesNumbersSum(int... divisors) {
         int sum = 0;
         for (int number = 1; number < 1000; number++) {
             boolean isMultiple = false;
@@ -45,11 +49,11 @@ public class Main {
                 sum += number;
             }
         }
-        System.out.println(sum);
+        return sum;
     }
 
     //    the sum of the multiples of the Fibonacci numbers is less than the maximum value
-    public static void sumEvenNumbers(int max) {
+    public static int sumEvenNumbers(int max) {
         int prevNum = 0;
         int curNum = 1;
         int sum = 0;
@@ -66,14 +70,8 @@ public class Main {
                 break;
             }
         }
-        System.out.println(sum);
+        return sum;
     }
-
-    public static void sumsNumbers() {
-        sumEvenNumbers(100);
-        sumEvenNumbers(4000000);
-    }
-
 
 //    public static void problem2(int max) {
 //        int num = 1;
@@ -96,6 +94,5 @@ public class Main {
 //        if (index == 1) return 1;
 //        return fib(index - 2) + fib(index - 1);
 //    }
-
 
 }
