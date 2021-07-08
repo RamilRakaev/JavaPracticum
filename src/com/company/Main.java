@@ -1,16 +1,15 @@
 package com.company;
 
-import java.util.ArrayList;
-
 public class Main {
 
     public static void main(String[] args) {
-//        task1();
-        task2(100);
-        task2(4000000);
+        problem1();
+        problem2(100);
+        problem2(4000000);
     }
 
-    public static void task1() {
+    public static void problem1() {
+        System.out.println("problem 1:");
         int sum = 0;
         for (int i = 1; i < 1000; i++) {
             if (i % 3 == 0 || i % 5 == 0) {
@@ -20,7 +19,8 @@ public class Main {
         System.out.println(sum);
     }
 
-    public static void task2(int max) {
+    public static void problem2(int max) {
+        System.out.println("problem 2:");
         int num = 1;
         int sum = 0;
         for (int i = 1; ; ) {
@@ -42,6 +42,7 @@ public class Main {
         if (n == 1) return 1;
         return Fib(n-2) + Fib(n-1);
     }
+
 
 //    public static void task2() {
 //        int firstNum = 1;
