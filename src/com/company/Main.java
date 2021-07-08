@@ -4,6 +4,10 @@ public class Main {
 
     public static void main(String[] args) {
         consoleOutput();
+        LightBulb lightBulb = new LightBulb(15, 200, LightBulbType.LED, "red");
+        lightBulb.setCondition(true);
+        lightBulb.broke();
+        System.out.println(lightBulb.toString());
     }
 
     public static void consoleOutput() {

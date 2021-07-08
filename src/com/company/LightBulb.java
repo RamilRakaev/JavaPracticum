@@ -1,46 +1,43 @@
 package com.company;
 
-enum LightBulbType {LED, luminescent, Halogen}
+enum LightBulbType {LED, Luminescent, Halogen}
 
 public class LightBulb {
-    public LightBulb() {
-    }
+    private boolean isWorking;
+    private boolean isBroken;
+    private final int energyConsumption;
+    private double price;
+    private final LightBulbType type;
+    private final String color;
+    private int workDurationInMonths = 6;
 
     public LightBulb(int energyConsumption, double price, LightBulbType type, String color) {
         this.energyConsumption = energyConsumption;
         this.price = price;
         this.type = type;
         this.color = color;
-    }
 
-    private boolean isWorking;
-    private boolean isBroken;
-    private int energyConsumption;
-    private double price;
-    private LightBulbType type;
-    private String color;
+        if (type == LightBulbType.LED)
+            workDurationInMonths += 12;
+        if (energyConsumption > 15)
+            workDurationInMonths -= 6;
+    }
 
     public final void setCondition(boolean value) {
         this.isWorking = value;
     }
 
-    public final void setServiceability(boolean value) {
-        if (value) {
-            this.isBroken = false;
+    public final void broke() {
+            this.isBroken = true;
             this.isWorking = false;
             this.price = 0;
-        }
     }
 
     public final void setPrice(int value) {
-        if (value <= 1000) {
-            this.price = value;
-        } else {
-            this.price = 1000;
-        }
+        this.price = Math.min(value, 1000);
     }
 
-    public boolean getCondition(boolean condition) {
+    public boolean getState() {
         return this.isWorking;
     }
 
@@ -61,25 +58,19 @@ public class LightBulb {
     }
 
     public int getWorkDurationInMonths(int workTerm) {
-        if (isBroken)
-            return 0;
-        int duration = 2 - workTerm;
-        if (price > 500)
-            duration += 6;
-        if (energyConsumption > 15)
-            duration -= 6;
-        if (type == LightBulbType.LED)
-            duration += 12;
-
-        return duration;
+        return workDurationInMonths - workTerm;
     }
 
     @Override
     public String toString() {
         return "Condition: " + isWorking + "; "
-                + " Energy consumption: " + energyConsumption + "watt; "
+                + " Energy consumption: " + energyConsumption + " watt; "
                 + "Price: " + price + "; "
                 + "Type: " + type + "; "
                 + "Color: " + color + ". ";
+    }
+
+    public void setBroken(boolean broken) {
+        isBroken = broken;
     }
 }
