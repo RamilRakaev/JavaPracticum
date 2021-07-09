@@ -1,32 +1,29 @@
 package com.company;
 
-import java.util.ArrayList;
-
 public class BankAccount {
-
-    public BankAccount(String bank, ArrayList<String> partners) {
-        this.bank = bank;
-        this.partners = partners;
-    }
-
-    final float commissionPercentage = 0.3F;
-    private ArrayList<String> partners;
-    private final String bank;
+    private String name;
+    private final Bank bank;
     private double state;
 
-    public void transaction(double amount, BankAccount recipient) {
-        double commission = amount * commissionPercentage;
-        for (String partner : partners){
-            if(partner == recipient.bank){
-                commission = 0;
-            }
-        }
-        this.state = amount;
-        recipient.state += amount - commission;
-    }
-    
-    public void addPartner(String bank){
-        partners.add(bank);
+    public BankAccount(String name, Bank bank, double startingState) {
+        this.name = name;
+        this.bank = bank;
+        this.state = startingState;
     }
 
+    public void transaction(double amount, BankAccount recipient) {
+        double commission = amount * bank.calculateCommission(recipient.bank);
+        this.state -= amount;
+        recipient.state += amount - commission;
+    }
+
+    public double accountStatus() {
+        return Math.round(state);
+    }
+
+    public void changeName(String newName) {
+        if (newName.length() <= 100) {
+            name = newName;
+        }
+    }
 }

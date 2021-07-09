@@ -3,12 +3,31 @@ package com.company;
 public class Main {
 
     public static void main(String[] args) {
-        consoleOutput();
-        LightBulb lightBulb = new LightBulb(15, 200, LightBulbType.LED, "red");
-        lightBulb.setCondition(true);
-        lightBulb.broke();
-        System.out.println(lightBulb.toString());
+        Bank BNPParibas = new Bank("BNPParibas", 0.08F);
+        Bank CreditAgricole = new Bank("CreditAgricole", 0.18F);
+        Bank BankOfAmerica = new Bank("BankOfAmerica", 0.4F);
+
+        BNPParibas.concludeContract(CreditAgricole);
+
+        BankAccount Misha = new BankAccount("Misha", CreditAgricole, 100);
+        BankAccount Daniel = new BankAccount("Daniel", BNPParibas, 1000.2);
+        BankAccount Vanya = new BankAccount("Vanya", BankOfAmerica, 500);
+
+
+        System.out.println("Daniel: " + Daniel.accountStatus());
+        System.out.println("Misha: " + Misha.accountStatus());
+        Daniel.transaction(100, Misha);
+        System.out.println("Daniel: " + Daniel.accountStatus());
+        System.out.println("Misha: " + Misha.accountStatus());
+        System.out.println();
+        System.out.println("Vanya: " + Vanya.accountStatus());
+        System.out.println("Misha: " + Misha.accountStatus());
+        Vanya.transaction(100, Misha);
+        System.out.println("Vanya: " + Vanya.accountStatus());
+        System.out.println("Misha: " + Misha.accountStatus());
     }
+
+
 
     public static void consoleOutput() {
         System.out.println("problem 1:");
