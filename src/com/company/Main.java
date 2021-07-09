@@ -1,8 +1,20 @@
 package com.company;
 
+import com.company.FileSystem.Directory;
+import com.company.FileSystem.Notepad;
+
 public class Main {
 
     public static void main(String[] args) {
+        Notepad notepad = new Notepad();
+        notepad.addAnEntry("new file", "22222");
+        notepad.record("new file", "3333");
+
+        Directory dir = new Directory("1");
+        dir.removeDirectory();
+    }
+
+    public static void bankTransactionsOutput() {
         Bank BNPParibas = new Bank("BNPParibas", 0.08F);
         Bank CreditAgricole = new Bank("CreditAgricole", 0.18F);
         Bank BankOfAmerica = new Bank("BankOfAmerica", 0.4F);
@@ -27,9 +39,8 @@ public class Main {
         System.out.println("Misha: " + Misha.accountStatus());
     }
 
-
-
-    public static void consoleOutput() {
+    //Console output
+    public static void mathematicalProblemsOutput() {
         System.out.println("problem 1:");
         System.out.println(getMultiplesNumbersSum(3, 5));
 
@@ -44,6 +55,7 @@ public class Main {
         System.out.println(getMultiplesNumbersSum(3, 5));
         System.out.println(getMultiplesNumbersSum(4, 7));
         System.out.println(getMultiplesNumbersSum(4, 7, 2));
+
     }
 
     //  the sum of numbers that are multiples of two divisors

@@ -5,7 +5,7 @@ public class BankAccount {
     private final Bank bank;
     private double state;
 
-    public BankAccount(String name, Bank bank, double startingState) {
+    BankAccount(String name, Bank bank, double startingState) {
         this.name = name;
         this.bank = bank;
         this.state = startingState;
