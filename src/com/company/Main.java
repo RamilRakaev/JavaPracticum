@@ -6,6 +6,8 @@ import com.company.FileSystem.Notepad;
 public class Main {
 
     public static void main(String[] args) {
+//        bankTransactionsOutput();
+
         Notepad notepad = new Notepad();
         notepad.addAnEntry("new file", "22222");
         notepad.record("new file", "3333");
@@ -39,7 +41,6 @@ public class Main {
         System.out.println("Misha: " + Misha.accountStatus());
     }
 
-    //Console output
     public static void mathematicalProblemsOutput() {
         System.out.println("problem 1:");
         System.out.println(getMultiplesNumbersSum(3, 5));

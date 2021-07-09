@@ -24,18 +24,47 @@ public class Directory {
         }
     }
 
+    //TODO: an error crashes, files equal null during recursion
     public void removeDirectory() {
-        File[] files = this.directory.listFiles();
-        for (File file : files) {
-            if (file.isDirectory()) {
-                Directory dir = new Directory(file.getPath());
-                dir.removeDirectory();
+        throws IOException {
+
+            if (directory.isDirectory()) {
+
+                //directory is empty, then delete it
+                if (directory.list().length == 0) {
+
+                    directory.delete();
+//                System.out.println("Directory is deleted : "+ file.getAbsolutePath());
+
+                } else {
+
+                    //list all the directory contents
+                    String files[] = directory.list();
+
+                    for (String temp : files) {
+                        //construct the file structure
+                        Directory
+                        File fileDelete = new File(directory, temp);
+
+                        //recursive delete
+                        removeDirectory(fileDelete);
+                    }
+
+                    //check the directory again, if empty then delete it
+                    if (directory.list().length == 0) {
+                        directory.delete();
+//                    System.out.println("Directory is deleted : " + file.getAbsolutePath());
+                    }
+                }
+
             } else {
-                file.delete();
+                //if file, then delete it
+                directory.delete();
+//            System.out.println("File is deleted : " + file.getAbsolutePath());
             }
-        }
-        directory.delete();
         directory = null;
         isExists = false;
     }
+
+
 }
