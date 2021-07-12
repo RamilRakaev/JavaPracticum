@@ -1,0 +1,191 @@
+package com.company.FileSystem;
+
+import java.io.*;
+
+public class FileManagement {
+    private String rootDirectory = "/home/rakaev_rg/IdeaProjects/practicum/";
+    public String encoding = "UTF-8";
+
+    public FileManagement(String _rootDirectory){
+        if (_rootDirectory != "") {
+            rootDirectory = _rootDirectory;
+        }
+    }
+
+    public String getRootDirectory(){
+        return rootDirectory;
+    }
+
+    public String writeBytes(byte[] bytes, String fileName) {
+        try (FileOutputStream stream = new FileOutputStream(rootDirectory + "/" + fileName, true)) {
+            stream.write(bytes, 0, bytes.length);
+            return "Success";
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+
+    public String readBytes(String fileName) {
+        String result = "";
+        File file = new File(rootDirectory + fileName);
+        try (BufferedReader stream = new BufferedReader(new InputStreamReader(
+                new FileInputStream(file), encoding))) {
+            int i = -1;
+            while ((i = stream.read()) != -1) {
+                result += (char) i;
+            }
+            return result;
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+
+    public String writeText(String text, String fileName) {
+        try (FileWriter stream = new FileWriter(rootDirectory + "/" + fileName, true)) {
+            stream.write(text);
+            return "Success";
+        } catch (Exception e){
+            return e.getMessage();
+        }
+    }
+
+    public String overwriteText(String text, String fileName){
+        try (FileWriter stream = new FileWriter(rootDirectory + "/" + fileName, false)) {
+            stream.write(text);
+            return "Success";
+        } catch (Exception e){
+            return e.getMessage();
+        }
+    }
+
+    public String readText(String fileName){
+        try (FileReader stream = new FileReader(rootDirectory + "/" + fileName)) {
+            String result = "";
+            int i;
+            while ((i = stream.read()) != -1){
+                result += (char) i;
+            }
+            return result;
+        } catch (Exception e){
+            return e.getMessage();
+        }
+    }
+}
+
+package com.company.FileSystem;
+
+import java.io.File;
+
+public class DirectoryManagement {
+    String path = "/home/rakaev_rg/defaultDirectory";
+    private File directory;
+    private boolean isExists = true;
+
+    public DirectoryManagement(String _path) {
+        if (_path != "") {
+            path = _path;
+        }
+        directory = new File(path);
+        directory.mkdir();
+    }
+
+    public String getPath(){
+        return directory.getPath();
+    }
+
+    public void move(String nameNewDirectory) {
+        if (isExists) {
+            File newDir = new File(path + nameNewDirectory);
+            newDir.mkdir();
+            File[] files = directory.listFiles();
+            for (File file : files) {
+                file.renameTo(new File(newDir, file.getName()));
+            }
+            directory = newDir;
+        }
+    }
+
+    public String removeDirectory() {
+        try {
+            removeDirectory(directory);
+            isExists = false;
+            return "Success";
+        } catch (Exception e){
+            return e.getMessage();
+        }
+    }
+
+    private void removeDirectory(File directory) {
+        String[] entries = directory.list();
+        if (entries != null)
+            for (String entry : entries) {
+                File currentFile = new File(directory.getPath(), entry);
+                if (currentFile.isDirectory()) {
+                    removeDirectory(currentFile);
+                }
+                currentFile.delete();
+            }
+        directory.delete();
+    }
+
+
+}
+
+package com.company.FileSystem;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class Notepad {
+    private File directory;
+    private ArrayList<String> files;
+    final String rootDirectory = "/home/rakaev_rg/Recordings/";
+
+    public Notepad() {
+        files = new ArrayList<String>();
+        directory = new File(rootDirectory);
+        directory.mkdir();
+    }
+
+    public String addAnEntry(String title, String text) {
+        String message = "successful creation!";
+        File recordingFile = new File(rootDirectory + title + ".txt");
+        try {
+            boolean created = recordingFile.createNewFile();
+            if (created) {
+                message = "The record was not created";
+            }
+            if (recordingFile.canWrite()) {
+                record(recordingFile, text);
+            }
+        } catch (IOException ex) {
+            message = ex.getMessage();
+        }
+        return message;
+    }
+
+    public String record(File file, String text) {
+        String message = "successful creation!";
+        try (FileWriter stream = new FileWriter(file, true)) {
+            stream.write(text);
+        } catch (IOException ex) {
+            message = ex.getMessage();
+        }
+        return message;
+    }
+
+    public String record(String fileName, String text) {
+        String message = "successful creation!";
+        try (FileWriter stream = new FileWriter(rootDirectory + fileName + ".txt", true)) {
+            stream.write(text);
+        } catch (IOException ex) {
+            message = ex.getMessage();
+        }
+        return message;
+    }
+
+
+}
+

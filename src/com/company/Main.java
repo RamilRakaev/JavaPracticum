@@ -1,44 +1,32 @@
 package com.company;
 
 import com.company.FileSystem.Directory;
-import com.company.FileSystem.Notepad;
+import com.company.FileSystem.FilesystemElement;
+import org.jetbrains.annotations.NotNull;
 
 public class Main {
 
     public static void main(String[] args) {
-//        bankTransactionsOutput();
+        Directory directory = new Directory("directory1", null);
+        directory.createFile("file1");
+        directory.createDirectory("directory2");
+        directory.createFile("file2");
 
-        Notepad notepad = new Notepad();
-        notepad.addAnEntry("new file", "22222");
-        notepad.record("new file", "3333");
+        Directory directory3 = new Directory("directory3", directory);
+        directory.pasteElement(directory3);
+        Directory directory4 = new Directory("directory4", directory3);
+        directory3.pasteElement(directory4);
 
-        Directory dir = new Directory("1");
-        dir.removeDirectory();
+        outputFilesystem(directory);
     }
 
-    public static void bankTransactionsOutput() {
-        Bank BNPParibas = new Bank("BNPParibas", 0.08F);
-        Bank CreditAgricole = new Bank("CreditAgricole", 0.18F);
-        Bank BankOfAmerica = new Bank("BankOfAmerica", 0.4F);
-
-        BNPParibas.concludeContract(CreditAgricole);
-
-        BankAccount Misha = new BankAccount("Misha", CreditAgricole, 100);
-        BankAccount Daniel = new BankAccount("Daniel", BNPParibas, 1000.2);
-        BankAccount Vanya = new BankAccount("Vanya", BankOfAmerica, 500);
-
-
-        System.out.println("Daniel: " + Daniel.accountStatus());
-        System.out.println("Misha: " + Misha.accountStatus());
-        Daniel.transaction(100, Misha);
-        System.out.println("Daniel: " + Daniel.accountStatus());
-        System.out.println("Misha: " + Misha.accountStatus());
-        System.out.println();
-        System.out.println("Vanya: " + Vanya.accountStatus());
-        System.out.println("Misha: " + Misha.accountStatus());
-        Vanya.transaction(100, Misha);
-        System.out.println("Vanya: " + Vanya.accountStatus());
-        System.out.println("Misha: " + Misha.accountStatus());
+    public static void outputFilesystem(@NotNull Directory directory){
+        System.out.println(directory.name);
+        System.out.println("children:");
+        for(FilesystemElement file : directory.getAllElements()){
+            System.out.println(file.getName());
+        }
+        System.out.println("end");
     }
 
     public static void mathematicalProblemsOutput() {
@@ -88,7 +76,7 @@ public class Main {
         return sum;
     }
 
-    //    the sum of the multiples of the Fibonacci numbers is less than the maximum value
+    //  the sum of the multiples of the Fibonacci numbers is less than the maximum value
     public static int sumEvenNumbers(int max) {
         int prevNum = 0;
         int curNum = 1;
@@ -108,27 +96,4 @@ public class Main {
         }
         return sum;
     }
-
-//    public static void problem2(int max) {
-//        int num = 1;
-//        int sum = 0;
-//        for (int i = 1; ; ) {
-//            num = fib(i);
-//            if (num <= max) {
-//                i++;
-//                if (num % 2 == 0)
-//                    sum += num;
-//            } else {
-//                System.out.println(sum);
-//                break;
-//            }
-//        }
-//    }
-//
-//    static int fib(int index) {
-//        if (index == 0) return 0;
-//        if (index == 1) return 1;
-//        return fib(index - 2) + fib(index - 1);
-//    }
-
 }

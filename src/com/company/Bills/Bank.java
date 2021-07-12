@@ -1,17 +1,22 @@
-package com.company;
+package com.company.Bills;
 
 import java.util.ArrayList;
 
 public class Bank {
-    Bank(String title, float commission) {
-        this.title = title;
+    Bank(int title, float commission) {
+        this.id = title;
         changeCommission(commission);
         partners = new ArrayList<Bank>();
     }
 
-    private String title;
+    private int id;
     private float commissionPercentage;
     private ArrayList<Bank> partners;
+    private double assets;
+
+    public void commissionDeduction(double amount) {
+        assets += amount;
+    }
 
     float calculateCommission(Bank recipient) {
         if (recipient.partners.contains(this))
@@ -31,11 +36,5 @@ public class Bank {
 
     void changeCommission(float commissionPercentage) {
         this.commissionPercentage = Math.min(0.3F, commissionPercentage);
-    }
-
-    void rename(String newTitle) {
-        if (newTitle.length() <= 100) {
-            title = newTitle;
-        }
     }
 }

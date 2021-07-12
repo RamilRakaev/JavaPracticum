@@ -1,70 +1,59 @@
 package com.company.FileSystem;
 
-import java.io.File;
+import java.util.ArrayList;
 
-public class Directory {
-    final String path = "/home/rakaev_rg/";
-    private File directory;
-    private boolean isExists = true;
+public class Directory extends FilesystemElement {
 
-    public Directory(String nameDirectory) {
-        directory = new File(path + nameDirectory);
-        directory.mkdir();
+    private ArrayList<FilesystemElement> elements;
+
+    public Directory(String name, Directory parent) {
+        this.name = name;
+        this.parent = parent;
+        elements = new ArrayList<>();
+        isDirectory = true;
     }
 
-    public void move(String nameNewDirectory) {
-        if (isExists) {
-            File newDir = new File(path + nameNewDirectory);
-            newDir.mkdir();
-            File[] files = directory.listFiles();
-            for (File file : files) {
-                file.renameTo(new File(newDir, file.getName()));
+    public void move(Directory newParent) {
+        parent.cutElement(this);
+        parent = newParent;
+        parent.pasteElement(this);
+    }
+
+    public void cutElement(FilesystemElement element) {
+        element.parent = null;
+        elements.remove(element);
+    }
+
+    public void pasteElement(FilesystemElement element) {
+        element.parent = this;
+        elements.add(element);
+    }
+
+    public int getSize() {
+        return elements.size();
+    }
+
+    public ArrayList<FilesystemElement> getAllElements() {
+        return new ArrayList<FilesystemElement>(elements);
+    }
+
+    public ArrayList<FilesystemElement> getDirectories() {
+        ArrayList<FilesystemElement> directories = new ArrayList<>();
+        for (FilesystemElement directory : elements) {
+            if (isDirectory) {
+                directories.add(directory);
             }
-            directory = newDir;
         }
+        return directories;
     }
 
-    //TODO: an error crashes, files equal null during recursion
-    public void removeDirectory() {
-        throws IOException {
-
-            if (directory.isDirectory()) {
-
-                //directory is empty, then delete it
-                if (directory.list().length == 0) {
-
-                    directory.delete();
-//                System.out.println("Directory is deleted : "+ file.getAbsolutePath());
-
-                } else {
-
-                    //list all the directory contents
-                    String files[] = directory.list();
-
-                    for (String temp : files) {
-                        //construct the file structure
-                        Directory
-                        File fileDelete = new File(directory, temp);
-
-                        //recursive delete
-                        removeDirectory(fileDelete);
-                    }
-
-                    //check the directory again, if empty then delete it
-                    if (directory.list().length == 0) {
-                        directory.delete();
-//                    System.out.println("Directory is deleted : " + file.getAbsolutePath());
-                    }
-                }
-
-            } else {
-                //if file, then delete it
-                directory.delete();
-//            System.out.println("File is deleted : " + file.getAbsolutePath());
+    public ArrayList<FilesystemElement> getFiles() {
+        ArrayList<FilesystemElement> files = new ArrayList<>();
+        for (FilesystemElement directory : elements) {
+            if (!isDirectory) {
+                files.add(directory);
             }
-        directory = null;
-        isExists = false;
+        }
+        return files;
     }
-
-
 }

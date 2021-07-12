@@ -23,7 +23,7 @@ public class LightBulb {
             workDurationInMonths -= 6;
     }
 
-    public final void setCondition(boolean value) {
+    public void setCondition(boolean value) {
         this.isWorking = value;
     }
 
