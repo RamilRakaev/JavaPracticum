@@ -12,5 +12,4 @@ public class File extends FilesystemElement {
         parent.cutElement(this);
         parent.pasteElement(this);
     }
-
 }

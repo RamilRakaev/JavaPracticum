@@ -37,21 +37,21 @@ public class Directory extends FilesystemElement {
         return new ArrayList<FilesystemElement>(elements);
     }
 
-    public ArrayList<FilesystemElement> getDirectories() {
-        ArrayList<FilesystemElement> directories = new ArrayList<>();
+    public ArrayList<Directory> getDirectories() {
+        ArrayList<Directory> directories = new ArrayList<>();
         for (FilesystemElement directory : elements) {
             if (isDirectory) {
-                directories.add(directory);
+                directories.add((Directory) directory);
             }
         }
         return directories;
     }
 
-    public ArrayList<FilesystemElement> getFiles() {
-        ArrayList<FilesystemElement> files = new ArrayList<>();
+    public ArrayList<File> getFiles() {
+        ArrayList<File> files = new ArrayList<>();
         for (FilesystemElement directory : elements) {
             if (!isDirectory) {
-                files.add(directory);
+                files.add((File) directory);
             }
         }
         return files;
